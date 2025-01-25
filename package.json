@@ -23,6 +23,12 @@
     "stryker": "npx stryker run",
     "test": "jest"
   },
+  "dependencies": {
+    "@chris.araneo/logger": "^0.0.2",
+    "express": "^4.21.2",
+    "mustache": "^4.2.0",
+    "node-mailjet": "^6.0.6"
+  },
   "devDependencies": {
     "@stryker-mutator/jest-runner": "^8.6.0",
     "@stryker-mutator/typescript-checker": "^8.6.0",
