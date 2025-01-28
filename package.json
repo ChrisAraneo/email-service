@@ -24,6 +24,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@chris.araneo/health-check": "^0.0.2",
     "@chris.araneo/logger": "^0.0.2",
     "express": "^4.21.2",
     "mustache": "^4.2.0",
