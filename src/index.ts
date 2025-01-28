@@ -1,3 +1,4 @@
+import { HealthCheckService } from '@chris.araneo/health-check';
 import { Logger, LogLevel } from '@chris.araneo/logger';
 import express from 'express';
 import Mustache from 'mustache';
@@ -11,8 +12,10 @@ const SUBJECT = process.env.SUBJECT;
 const RECEIVER = process.env.RECEIVER;
 const TEXT_TEMPLATE = process.env.TEXT_TEMPLATE;
 const HTML_TEMPLATE = process.env.HTML_TEMPLATE;
-const PORT = process.env.PORT;
+const EMAIL_SERVICE_PORT = process.env.EMAIL_SERVICE_PORT;
 const LOG_LEVEL = process.env.LOG_LEVEL;
+const EMAIL_SERVICE_HEALTH_CHECK_PORT =
+  process.env.EMAIL_SERVICE_HEALTH_CHECK_PORT;
 
 const logger = new Logger((LOG_LEVEL || 'debug') as LogLevel);
 
@@ -63,6 +66,14 @@ app.get('/', (request, respone) => {
     });
 });
 
-app.listen(PORT);
+app.listen(EMAIL_SERVICE_PORT);
 
-logger.info(`Server running at port ${PORT}`);
+logger.info(`Server running at port ${EMAIL_SERVICE_PORT}`);
+
+if (EMAIL_SERVICE_HEALTH_CHECK_PORT) {
+  new HealthCheckService(
+    '/health',
+    Number(EMAIL_SERVICE_HEALTH_CHECK_PORT),
+    logger,
+  );
+}
