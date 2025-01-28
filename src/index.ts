@@ -4,18 +4,19 @@ import express from 'express';
 import Mustache from 'mustache';
 import Mailjet from 'node-mailjet';
 
-const MJ_APIKEY_PUBLIC = process.env.MJ_APIKEY_PUBLIC;
-const MJ_APIKEY_PRIVATE = process.env.MJ_APIKEY_PRIVATE;
-const SENDER = process.env.SENDER;
-const NAME = process.env.NAME;
-const SUBJECT = process.env.SUBJECT;
-const RECEIVER = process.env.RECEIVER;
-const TEXT_TEMPLATE = process.env.TEXT_TEMPLATE;
-const HTML_TEMPLATE = process.env.HTML_TEMPLATE;
-const EMAIL_SERVICE_PORT = process.env.EMAIL_SERVICE_PORT;
-const LOG_LEVEL = process.env.LOG_LEVEL;
-const EMAIL_SERVICE_HEALTH_CHECK_PORT =
-  process.env.EMAIL_SERVICE_HEALTH_CHECK_PORT;
+const {
+  MJ_APIKEY_PUBLIC,
+  MJ_APIKEY_PRIVATE,
+  SENDER,
+  NAME,
+  SUBJECT,
+  RECEIVER,
+  TEXT_TEMPLATE,
+  HTML_TEMPLATE,
+  EMAIL_SERVICE_PORT,
+  LOG_LEVEL,
+  EMAIL_SERVICE_HEALTH_CHECK_PORT,
+} = process.env;
 
 const logger = new Logger((LOG_LEVEL || 'debug') as LogLevel);
 
@@ -75,5 +76,5 @@ if (EMAIL_SERVICE_HEALTH_CHECK_PORT) {
     '/health',
     Number(EMAIL_SERVICE_HEALTH_CHECK_PORT),
     logger,
-  );
+  ).listen();
 }
