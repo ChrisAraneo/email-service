@@ -2,7 +2,7 @@ import { HealthCheckService } from '@chris.araneo/health-check';
 import { Logger, LogLevel } from '@chris.araneo/logger';
 import express from 'express';
 import Mustache from 'mustache';
-import Mailjet from 'node-mailjet';
+import Mailjet, { Client } from 'node-mailjet';
 
 const {
   MJ_APIKEY_PUBLIC,
@@ -27,7 +27,14 @@ logger.debug(
 );
 
 const app = express();
-const mailjet = Mailjet.apiConnect(MJ_APIKEY_PUBLIC, MJ_APIKEY_PRIVATE);
+
+let mailjet: Client;
+
+try {
+  mailjet = Mailjet.apiConnect(MJ_APIKEY_PUBLIC, MJ_APIKEY_PRIVATE);
+} catch (error: unknown) {
+  logger.error('Mailjet API connect error: ' + JSON.stringify(error));
+}
 
 app.get('/', (request, respone) => {
   const body = request.body;
